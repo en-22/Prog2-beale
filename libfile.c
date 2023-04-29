@@ -1,7 +1,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "file.h"
+#include "libfile.h"
 
 void testa_arq_r(FILE* arq, char *nome){
    	if(!arq){

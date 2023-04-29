@@ -1,33 +1,35 @@
-# Makefile de exemplo (Manual do GNU Make)
-     
 CFLAGS = -Wall -std=c99 -g # flags de compilacao
 LDFLAGS = -lm
 
 CC = gcc
 
 # arquivos-objeto
-    objects = beale.o cifras.o libfila.o codificar.o file.o decodificar.o
+    objects = beale.o libcifras.o libfila.o libcodificar.o libfile.o libdecodificar.o
 
-beale: beale.o cifras.o libfila.o codificar.o file.o decodificar.o
-	$(CC) -o beale beale.o cifras.o libfila.o codificar.o file.o decodificar.o $(LDFLAGS)
+all: beale.o libcifras.o libfila.o libcodificar.o libfile.o libdecodificar.o
+	$(CC) -o beale beale.o libcifras.o libfila.o libcodificar.o libfile.o libdecodificar.o $(LDFLAGS)
 
-cifras.o: cifras.c
-	$(CC) -c $(CFLAGS) cifras.c
+libcifras.o: libcifras.c
+	$(CC) -c $(CFLAGS) libcifras.c
 
 libfila.o: libfila.c
 	$(CC) -c $(CFLAGS) libfila.c
 
-codificar.o: codificar.c
-	$(CC) -c $(CFLAGS) codificar.c
+libcodificar.o: libcodificar.c
+	$(CC) -c $(CFLAGS) libcodificar.c
 
-decodificar.o: decodificar.c
-	$(CC) -c $(CFLAGS) decodificar.c
+libdecodificar.o: libdecodificar.c
+	$(CC) -c $(CFLAGS) libdecodificar.c
 
 beale.o: beale.c
 	$(CC) -c $(CFLAGS) beale.c
 
-file.o: file.c
-	$(CC) -c $(CFLAGS) file.c
+libfile.o: libfile.c
+	$(CC) -c $(CFLAGS) libfile.c
 
 clean:
-	rm -f $(objects) teste
+	rm -f $(objects) *~
+
+purge: clean
+	rm -f beale
+

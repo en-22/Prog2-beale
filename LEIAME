@@ -1,0 +1,15 @@
+O arquivo beale.c possui o código da função main. Os arquivos liblibfila.c, libcifras.c, libcodificar.c, libdecodificar.c e libfile.c possuem funções utilizadas no main.
+
+A libcifras.h define a lista cifras, ela possui a struct cifras, que guarda o primeiro nodo da struct nodo_cifras, que guarda uma letra e suas chaves e um ponteiro para o próximo nodo. Nela estão as funções para criar a lista, destruí-la, imprimi-la, adicionar uma chave ou letra a ela, escrever a lista em um arquivo, ler as cifras de um arquivo de cifras e fazer as chaves a partit de um livro cifra.
+
+As chaves da lista da libcifras.h são guardadas em uma fila definida em libfila.h, ela possui a struct fila que possui um ponteiro para o primeiro e para o último elemento da fila e a quantidade de elementos nela, e a struct nodo_f, que guarda um elemento e um ponteiro para o próximo nodo. Nela estão as funções para criar a fila, destruí-la, imprimi-la, adicionar um elemento a ela, retornar seu tamanho, testar se um elemento pertence a fila, retornar um elemento aleatório, retornar um elemento a partir de uma posição.
+
+A libcodificar.h possui uma função para codificar uma letra a partir de uma lista cifras e uma função para codificar um arquivo.
+
+A libdecodificar.h possui uma função para decodificar uma letra a partir de uma lista cifras e uma função para decodificar um arquivo.
+
+A libfile.h	possui funções para testar se os arquivos de escrita e leitura existem e tratar essa informação, podendo encerrar o programa com uma mensagem de erro, para imprimir uma mensagem de erro em relação a formatação da linha execução e encerrar o programa, para imprimir uma mensagem de erro em relação a alocação de memória do programa e encerrar o programa, e para testar se as opções na linha de execução foram repetidas, o que encerra o programa com uma mensagem de erro.
+
+Uma expliacação mais detalhada em relação as funções e seus retornos esta nos .h de cada lib.
+
+O beale.c testa as opções da linha de execução, podendo terminar o programa na ocorrência de uma formatação inválida, e trata os arquivos como especificado na implementação do trabalho.

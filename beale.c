@@ -3,11 +3,13 @@
 #include <string.h>
 #include <unistd.h>
 #include "libfila.h"
-#include "cifras.h"
-#include "codificar.h"
-#include "decodificar.h"
-#include "file.h"
+#include "libcifras.h"
+#include "libcodificar.h"
+#include "libdecodificar.h"
+#include "libfile.h"
 #include <getopt.h>
+#include <time.h>
+
 int main(int argc, char **argv){
 	int option;
 	char *arq_dest;
@@ -15,7 +17,8 @@ int main(int argc, char **argv){
 	int flag_arqchaves = 0, flag_e = 0, flag_d = 0, flag_b = 0, flag_i = 0, flag_m = 0, flag_o = 0, flag_c = 0;
     opterr = 0;
 	cifras* cifras = cria_cifras();
-	
+	srand(time(NULL));//Para a escolha aleatória das chaves na codificação.
+
 	if(argc < 8 || argc > 11)
 		msg_erro();
 

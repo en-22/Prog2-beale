@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "decodificar.h"
+#include "libdecodificar.h"
 #include "libfila.h"
 
 void decodifica_arq(cifras *c, FILE *codificada, FILE *decodificada){

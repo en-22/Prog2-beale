@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "cifras.h"
+#include "libcifras.h"
 
 #define SIZE 1000
 cifras *cria_cifras(){

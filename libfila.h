@@ -1,12 +1,12 @@
 #ifndef _fila_
 #define _fila_
-struct nodo_f {
+struct nodo_f{
     int elem;
     struct nodo_f *prox;
 };
 typedef struct nodo_f nodo_f_t;
 
-struct fila {
+struct fila{
     nodo_f_t *ini;
     nodo_f_t *fim;
     int tamanho;
@@ -30,3 +30,4 @@ int retorna_elemento_rand(fila_t *f);
 //Imprime todos os elementos da fila, para depuração.
 void imprime_fila (fila_t *f);
 #endif //_fila_
+

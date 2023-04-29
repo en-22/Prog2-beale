@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "codificar.h"
+#include "libcodificar.h"
 #include "libfila.h"
 
 int codificaLetra(char letra, cifras *c){
