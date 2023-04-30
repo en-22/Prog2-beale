@@ -10,6 +10,7 @@ typedef struct nodo_cifras{
 typedef struct cifras{
     nodo_cifras *primeiro;
 } cifras;
+
 //Cria uma lista de cifras vazia e a retorna, se falhar retorna NULL.
 cifras *cria_cifras();
 //Destroi a lista de cifras e retorna NULL.
@@ -22,7 +23,7 @@ void escreve_cifras(cifras *c, FILE *arq);
 int le_cifras(cifras *c, FILE *arq);
 //Cria uma lista cifras a partir de um arquivo. Retorna 1 em caso de sucesso, 0 caso contrario.
 int faz_cifras(cifras *c, FILE *arq);
-//Adiciona um número para a fila de chaves de uma letra. Caso a letra não esteja na lista, primeiro a adiona em ordem alfabética nela. Retorna 1 em caso de sucesso ou, caso a letra seja acentuada, retorna 1 sem adiciona-la, e 0 caso contrario.
+//Adiciona um número para a fila de chaves de uma letra. Caso a letra não esteja na lista, primeiro a adiona em ordem alfabética. Retorna 1 em caso de sucesso ou, caso a letra seja acentuada, retorna 1 sem adiciona-la, e 0 caso contrario.
 int adiciona_chave(cifras *c, char letra, int posicao);
 #endif //_cifras_
 

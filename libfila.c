@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "libfila.h"
 
-fila_t * cria_fila (){
+fila_t * cria_fila(){
 	fila_t* fila;	
 	if(!(fila = malloc(sizeof(fila_t))))
 		return NULL;
@@ -12,8 +12,8 @@ fila_t * cria_fila (){
 
 fila_t * destroi_fila (fila_t *f){
 	nodo_f_t* nodoaux;
-	int i;
-	for(i=0; i<f->tamanho; i++){
+
+	for(int i = 0; i < f->tamanho; i++){
         nodoaux = f->ini;
 		f->ini = nodoaux->prox;
 		free(nodoaux);
@@ -22,26 +22,26 @@ fila_t * destroi_fila (fila_t *f){
 	return NULL;
 }
 
-int tamanho_fila (fila_t *f){
+int tamanho_fila(fila_t *f){
 	return f->tamanho;
 }
 
-int insere_fila (fila_t *f, int elemento){
-	nodo_f_t* nodo;
+int insere_fila(fila_t *f, int elemento){
+	nodo_f_t* novonodo;
 
-	if(!(nodo = malloc(sizeof(nodo_f_t))))
+	if(!(novonodo = malloc(sizeof(nodo_f_t))))
         return 0;
+    novonodo->elem = elemento;
 
 	if(f->tamanho == 0){       
-		nodo->elem = elemento;
-		f->ini = nodo;
-		f->fim = nodo;
+		f->ini = novonodo;
+		f->fim = novonodo;
 		f->tamanho++;
 		return 1;
 	}
-    nodo->elem = elemento;
-    (f->fim)->prox = nodo;
-    f->fim = nodo;
+
+    (f->fim)->prox = novonodo;
+    f->fim = novonodo;
     f->tamanho++;
 	return 1;
 }
@@ -75,11 +75,11 @@ int retorna_elemento_index(fila_t *f, int index){
     return nodoaux->elem;
 }
 
-void imprime_fila (fila_t *f){
-    nodo_f_t* nodo = f->ini;
+void imprime_fila(fila_t *f){
+    nodo_f_t* nodoaux = f->ini;
 
 	for(int i = 0; i < f->tamanho; i++){
-		printf(" %d", nodo->elem);
-        nodo = nodo->prox;
+		printf(" %d", nodoaux->elem);
+        nodoaux = nodoaux->prox;
 	}
 }

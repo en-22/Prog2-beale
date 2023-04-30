@@ -3,9 +3,11 @@
 #include <string.h>
 #include "libcifras.h"
 
-#define SIZE 1000
+#define SIZE 1024
+
 cifras *cria_cifras(){
-	cifras* cifras;	
+	cifras* cifras;
+
 	if(!(cifras = malloc(sizeof(cifras))))
 		return NULL;
     cifras->primeiro = NULL;
@@ -13,7 +15,8 @@ cifras *cria_cifras(){
 }
 
 cifras *destroi_cifras(cifras *c){
-    nodo_cifras* nodoaux = c->primeiro;
+    nodo_cifras* nodoaux;
+
     while(c->primeiro != NULL){
         nodoaux = c->primeiro;
         c->primeiro = nodoaux->prox;
@@ -26,6 +29,7 @@ cifras *destroi_cifras(cifras *c){
 
 void imprime_cifras(cifras *c){
     nodo_cifras* nodoaux = c->primeiro;
+
     while(nodoaux != NULL){
         printf("%c:", nodoaux->letra);
         imprime_fila(nodoaux->chaves);
@@ -36,14 +40,14 @@ void imprime_cifras(cifras *c){
 
 
 void escreve_cifras(cifras *c, FILE *arq){
-    nodo_cifras* nodo = c->primeiro;
+    nodo_cifras* nodoaux = c->primeiro;
 
-    while(nodo != NULL){
-        fprintf(arq, "%c:", nodo->letra);
-		for(int x = 0; x < tamanho_fila(nodo->chaves); x++)
-			fprintf(arq, " %d", retorna_elemento_index(nodo->chaves, x));
+    while(nodoaux != NULL){
+        fprintf(arq, "%c:", nodoaux->letra);
+		for(int i = 0; i < tamanho_fila(nodoaux->chaves); i++)
+			fprintf(arq, " %d", retorna_elemento_index(nodoaux->chaves, i));
        	fprintf(arq, "\n");
-        nodo = nodo->prox;
+        nodoaux = nodoaux->prox;
 	}
 }
 
@@ -67,71 +71,68 @@ int faz_cifras(cifras *c, FILE *arq){
 	int i = 0;
 	char *palavra = malloc(sizeof(char)*SIZE);
 
-    while(fscanf(arq, "%s", palavra) != EOF){
+    while(fscanf(arq, "%s", palavra) != EOF)
         if(!(adiciona_chave(c, palavra[0], i++)))
 			return 0;
-    }
-	free(palavra);
+
+    free(palavra);
 	return 1;
 }
 
 int adiciona_inicio_cifras(cifras *c, char letra, int posicao){
-	nodo_cifras* nodo;
-
-	if(!(nodo = malloc(sizeof(nodo_cifras))))
-        return 0;
-
-    nodo->letra = letra;
-    if(!(nodo->chaves = cria_fila()))
-		return 0;
-    if(!(insere_fila(nodo->chaves, posicao)))
-		return 0;
-
-	if(c->primeiro == NULL){
-		c->primeiro = nodo;
-        c->primeiro->prox = NULL;
-		return 1;
-	}
-	nodo_cifras* nodoaux = c->primeiro;
-	c->primeiro = nodo;
-	c->primeiro->prox = nodoaux;
-	return 1;
-}
-
-int adiciona_ordem_cifras (cifras *c, char letra, int posicao){
-	if(c->primeiro == NULL || c->primeiro->letra > letra)
-		return adiciona_inicio_cifras(c, letra, posicao);
-	nodo_cifras* nodo, *novonodo;
+	nodo_cifras* novonodo;
 
 	if(!(novonodo = malloc(sizeof(nodo_cifras))))
-		return 0;
-        
-    nodo_cifras* nodoaux = c->primeiro;
-	nodo = nodoaux->prox;
-
-	while(nodo != NULL && (nodo->letra < letra)){
-	    nodoaux = nodo;
-	    nodo = nodo->prox;		
-    }
-
-    novonodo->letra = letra;   
+        return 0;
+    novonodo->letra = letra;
     if(!(novonodo->chaves = cria_fila()))
 		return 0;
     if(!(insere_fila(novonodo->chaves, posicao)))
 		return 0;
-    novonodo->prox = nodo;
+
+	if(c->primeiro == NULL){
+		c->primeiro = novonodo;
+        c->primeiro->prox = NULL;
+		return 1;
+	}
+
+	nodo_cifras* nodoaux = c->primeiro;
+	c->primeiro = novonodo;
+	c->primeiro->prox = nodoaux;
+	return 1;
+}
+
+int adiciona_ordem_cifras(cifras *c, char letra, int posicao){
+	if(c->primeiro == NULL || c->primeiro->letra > letra)
+		return adiciona_inicio_cifras(c, letra, posicao);
+
+	nodo_cifras *novonodo, *nodoaux = c->primeiro;
+
+	if(!(novonodo = malloc(sizeof(nodo_cifras))))
+		return 0;
+    novonodo->letra = letra;     
+    if(!(novonodo->chaves = cria_fila()))
+		return 0;
+    if(!(insere_fila(novonodo->chaves, posicao)))
+		return 0;
+
+    while(nodoaux->prox != NULL && (nodoaux->prox->letra < letra))
+	    nodoaux = nodoaux->prox;		
+
+    novonodo->prox = nodoaux->prox;
     nodoaux->prox = novonodo;
 	return 1;
 }
 
 int adiciona_chave(cifras *c, char letra, int posicao){
-    if(letra < 0)
+    if(letra < 0)//caso a letra seja acentuada.
         return 1;
 
-    if(letra <='Z' && letra >= 'A')
+    nodo_cifras* nodoaux = c->primeiro;
+
+    if(letra <='Z' && letra >= 'A')//transforma uma letra maiúscula em minúscula.
         letra = letra + 32;
 
-    nodo_cifras* nodoaux = c->primeiro;
     while(nodoaux != NULL && nodoaux->letra != letra)
         nodoaux = nodoaux->prox;
 

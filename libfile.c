@@ -12,7 +12,7 @@ void testa_arq_r(FILE* arq, char *nome){
 
 void testa_arq_w(char *nome){
    	if(access(nome, F_OK) == 0){
-      printf("Arquivo de escrita (%s) já existente\n", nome);
+      printf("Arquivo de escrita %s já existente\n", nome);
       exit (1) ;
    	}
 }

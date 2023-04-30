@@ -4,9 +4,29 @@
 #include "libdecodificar.h"
 #include "libfila.h"
 
+char decodificaLetra(int num, cifras *c){
+	if(num == -1)
+		return ' ';
+
+    if(num == -2)
+        return '\n';
+    
+    nodo_cifras* nodoaux = c->primeiro;
+
+    if(nodoaux == NULL || num == -3)
+        return '?';
+
+    while(nodoaux->prox != NULL && !pertence_fila(nodoaux->chaves, num))
+		nodoaux = nodoaux->prox;
+
+    if(nodoaux == NULL || !pertence_fila(nodoaux->chaves, num))
+        return ' ';
+
+    return nodoaux->letra;
+}
+
 void decodifica_arq(cifras *c, FILE *codificada, FILE *decodificada){
-	int i;
-    int flag = 0;
+	int i, flag = 0;
     char letra_decodificada;
 
 	while(fscanf(codificada, "%d ", &i) != EOF){
@@ -17,29 +37,5 @@ void decodifica_arq(cifras *c, FILE *codificada, FILE *decodificada){
     }
     if(flag == 1)
         printf("Não foi possível decodificar algumas letras.\n");
-}
-
-char decodificaLetra(int num, cifras *c){
-    nodo_cifras* nodoaux = c->primeiro;
-	nodo_cifras* nodo = nodoaux->prox;
-
-	if(nodoaux == NULL || num == -1)
-		return ' ';
-
-    if(num == -2)
-        return '\n';
-
-    if(num == -3)
-        return '?';
-
-    while(nodo != NULL && !pertence_fila(nodoaux->chaves, num)){
-		nodoaux = nodo;
-		nodo = nodo->prox;		
-	}
-
-    if(nodoaux == NULL || !pertence_fila(nodoaux->chaves, num))
-        return ' ';
-
-    return nodoaux->letra;
 }
 

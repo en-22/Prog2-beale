@@ -11,10 +11,9 @@
 #include <time.h>
 
 int main(int argc, char **argv){
-	int option;
-	char *arq_dest;
+	int option, flag_arqchaves = 0, flag_e = 0, flag_d = 0, flag_b = 0, flag_i = 0, flag_m = 0, flag_o = 0, flag_c = 0;
+	char *arq_dest, *arq_chaves;
     FILE *livrocifra, *msgor, *msgcod, *arqchaves, *msgdecod;
-	int flag_arqchaves = 0, flag_e = 0, flag_d = 0, flag_b = 0, flag_i = 0, flag_m = 0, flag_o = 0, flag_c = 0;
     opterr = 0;
 	cifras* cifras = cria_cifras();
 	srand(time(NULL));//Para a escolha aleatória das chaves na codificação.
@@ -58,11 +57,9 @@ int main(int argc, char **argv){
 					break;
 				case 'c':
 					teste_flag(&flag_c);
-
                     if(flag_d == 0){
 					    flag_arqchaves = 1;
-						testa_arq_w(optarg);
-						arqchaves = fopen(optarg, "w");
+                        arq_chaves = optarg;
                     }else{
 						arqchaves = fopen(optarg, "r");
 						testa_arq_r(arqchaves, optarg);      
@@ -73,7 +70,6 @@ int main(int argc, char **argv){
 					break;
                 case 'i':
 					teste_flag(&flag_i);
-
                     if(flag_e == 0){
 						msgcod = fopen(optarg, "r");
 						testa_arq_r(msgcod, optarg);
@@ -86,16 +82,19 @@ int main(int argc, char **argv){
 				default:
                     msg_erro();
 		}
-    if(flag_e == 1){
+
+    if(flag_e == 1 && flag_b == 1 && flag_m == 1 && flag_o == 1){
 		msgcod = fopen(arq_dest, "w");
         if(flag_arqchaves == 1){
+            testa_arq_w(arq_chaves);
+			arqchaves = fopen(arq_chaves, "w");
 			escreve_cifras(cifras, arqchaves);
 			fclose(arqchaves);
 		}
         codifica_arq(cifras, msgor, msgcod);
 		fclose(msgor);
 		fclose(msgcod);
-    }else if(flag_d == 1){
+    }else if(flag_d == 1 && flag_i == 1 && flag_o == 1 && (flag_b == 1 || flag_c == 1)){
 		msgdecod = fopen(arq_dest, "w");
         decodifica_arq(cifras, msgcod, msgdecod);
 		fclose(msgcod);
@@ -103,6 +102,7 @@ int main(int argc, char **argv){
     }else{
         msg_erro();
 	}
+
 	destroi_cifras(cifras);
 	return 0;
 }
