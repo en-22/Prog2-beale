@@ -1,0 +1,10 @@
+#include <stdio.h>
+#include <stdint.h>
+#include <stdlib.h>
+#include <float.h>
+#include <math.h>
+#include <cmath.h>
+
+int cria_intervalo(float num){
+    float min = 
+}
